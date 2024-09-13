@@ -6,10 +6,12 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
+    private float moveSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
 
     public float groundDrag;
-
+    
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
@@ -17,12 +19,12 @@ public class PlayerMovement : MonoBehaviour
     bool readyToJump;
     public Transform playerTransform;
 
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
+
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode attackKey = KeyCode.Mouse0;
+    public KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -38,6 +40,15 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    public MovementState state;
+
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        air
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
         MyInput();
         SpeedControl();
+        StateHandler();
 
         if (grounded)
             rb.drag = groundDrag;
@@ -79,6 +91,24 @@ public class PlayerMovement : MonoBehaviour
         }
         if(Input.GetKey(attackKey)){
             Attack();
+        }
+    }
+
+    private void StateHandler()
+    {
+        // Mode - Sprinting
+        if(grounded && Input.GetKey(sprintKey))
+        {
+            state = MovementState.sprinting;
+            moveSpeed = sprintSpeed;
+        }
+        else if (grounded) {
+            state = MovementState.walking;
+            moveSpeed = walkSpeed;
+        }
+        else 
+        {
+            state = MovementState.air;
         }
     }
 
