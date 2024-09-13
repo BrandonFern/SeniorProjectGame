@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerMovementTutorial : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
@@ -13,13 +13,16 @@ public class PlayerMovementTutorial : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    public Camera cam;
     bool readyToJump;
+    public Transform playerTransform;
 
     [HideInInspector] public float walkSpeed;
     [HideInInspector] public float sprintSpeed;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode attackKey = KeyCode.Mouse0;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -45,13 +48,11 @@ public class PlayerMovementTutorial : MonoBehaviour
 
     private void Update()
     {
-        // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
         MyInput();
         SpeedControl();
 
-        // handle drag
         if (grounded)
             rb.drag = groundDrag;
         else
@@ -68,7 +69,6 @@ public class PlayerMovementTutorial : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // when to jump
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
@@ -77,18 +77,18 @@ public class PlayerMovementTutorial : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+        if(Input.GetKey(attackKey)){
+            Attack();
+        }
     }
 
     private void MovePlayer()
     {
-        // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // on ground
         if(grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
-        // in air
         else if(!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
     }
@@ -97,7 +97,6 @@ public class PlayerMovementTutorial : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        // limit velocity if needed
         if(flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
@@ -107,7 +106,6 @@ public class PlayerMovementTutorial : MonoBehaviour
 
     private void Jump()
     {
-        // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -115,5 +113,60 @@ public class PlayerMovementTutorial : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    [Header("Attacking")]
+    public float attackDistance = 3f;
+    public float attackDelay = 0.4f;
+    public float attackSpeed = 1f;
+    public int attackDamage = 1;
+    public LayerMask attackLayer;
+
+    bool attacking = false;
+    bool readyToAttack = true;
+    int attackCount;
+
+    public void Attack()
+    {
+        if(!readyToAttack || attacking) return;
+
+        readyToAttack = false;
+        attacking = true;
+
+        Invoke(nameof(ResetAttack), attackSpeed);
+        Invoke(nameof(AttackRaycast), attackDelay);
+
+        if(attackCount == 0)
+        {
+            attackCount++;
+        }
+        else
+        {
+            attackCount = 0;
+        }
+    }
+
+    void ResetAttack()
+    {
+        attacking = false;
+        readyToAttack = true;
+    }
+
+    void AttackRaycast()
+    {
+    Vector3 rayOrigin = playerTransform.position; 
+    Vector3 rayDirection = playerTransform.forward; 
+
+    Debug.DrawRay(rayOrigin, rayDirection * attackDistance, Color.red, attackDistance);
+
+    if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, attackDistance, attackLayer))
+    {
+        Debug.DrawLine(rayOrigin, hit.point, Color.green, attackDistance);
+
+        if (hit.transform.TryGetComponent<Actor>(out Actor T))
+        {
+            T.TakeDamage(attackDamage);
+        }
+    } 
     }
 }
