@@ -1,15 +1,3 @@
-fileFormatVersion: 2
-guid: 5d8af8f434f69794eabd684fb44b4fbf
-NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 153153
-  packageName: Stylized Grass Texture
-  packageVersion: 1.0
-  assetPath: Assets/LowlyPoly/Stylized Grass Texture/Materials/Stylize_Grass.mat
-  uploadId: 510360
+version https://git-lfs.github.com/spec/v1
+oid sha256:9957100c40d1310bddce09eae504ea06d4bd62fbc151486f5fc307b83f9c0ac7
+size 413
