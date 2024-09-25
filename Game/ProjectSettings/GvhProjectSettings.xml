@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <projectSettings>
   <projectSetting name="com.google.external-dependency-managerAnalyticsEnabled" value="False" />
+<<<<<<< Updated upstream
   <projectSetting name="com.google.firebaseAnalyticsCookie" value="1ec6bcaf683945778f1fc70297d7f382" />
+=======
+  <projectSetting name="com.google.firebaseAnalyticsCookie" value="ebf7c98d33aa413b87db1c49fa20b094" />
+>>>>>>> Stashed changes
   <projectSetting name="com.google.firebaseAnalyticsEnabled" value="True" />
 </projectSettings>
