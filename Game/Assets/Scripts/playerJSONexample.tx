@@ -1,0 +1,10 @@
+filePath = Path.Combine(Application.persistentDataPath, "playerData.json");
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            PlayerData playerData = JsonUtility.FromJson<PlayerData>(json);
+            level = playerData.level;
+            name = playerData.name;
+            kills = playerData.stats.kills;
+            deaths = playerData.stats.deaths;             
+        }
