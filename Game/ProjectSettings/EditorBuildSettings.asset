@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Menu.unity
     guid: 94da8abb25d196c41a77a1192bb13f63
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelection.unity
+    guid: 8edcc170194847b408146a6b9c53d26b
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
