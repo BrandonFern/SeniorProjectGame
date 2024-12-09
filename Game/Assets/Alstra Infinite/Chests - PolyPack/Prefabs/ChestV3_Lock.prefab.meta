@@ -1,14 +1,3 @@
-fileFormatVersion: 2
-guid: e70771266301f254cacb6582f0c9ebcb
-PrefabImporter:
-  externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 209167
-  packageName: Chests - PolyPack
-  packageVersion: 1.0
-  assetPath: Assets/Alstra Infinite/Chests - PolyPack/Prefabs/ChestV3_Lock.prefab
-  uploadId: 473642
+version https://git-lfs.github.com/spec/v1
+oid sha256:31a9ab805f74ded0ebaaa53c7e725ac8cc2f7abb7913eed0bd07036183d911c6
+size 380

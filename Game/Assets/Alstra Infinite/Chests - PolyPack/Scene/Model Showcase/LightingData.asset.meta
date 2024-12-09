@@ -1,15 +1,3 @@
-fileFormatVersion: 2
-guid: 8c0dbf145d380d14ea3354d7c66d0f83
-NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 209167
-  packageName: Chests - PolyPack
-  packageVersion: 1.0
-  assetPath: Assets/Alstra Infinite/Chests - PolyPack/Scene/Model Showcase/LightingData.asset
-  uploadId: 473642
+version https://git-lfs.github.com/spec/v1
+oid sha256:8006bdc79503872dec4696b5e729701d2bdda1a351a3bda7331aa954f36f7b01
+size 421
